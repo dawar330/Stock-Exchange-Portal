@@ -53,46 +53,79 @@ export function CustomersTable() {
   }, [customersUIProps.queryParams, dispatch]);
   // Table columns
   const columns = [
+
     {
       dataField: "id",
-      text: "ID",
+      text: "Symbol",
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
       dataField: "firstName",
-      text: "Firstname",
+      text: "Company",
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
       dataField: "lastName",
-      text: "Lastname",
+      text: "CurrentPrice",
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
       dataField: "email",
-      text: "Email",
+      text: "PriceExtHrs",
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
       dataField: "gender",
-      text: "Gender",
-      sort: false,
+      text: "DayChange$",
+      sort: true,
       sortCaret: sortCaret,
+      headerSortingClasses,
     },
     {
       dataField: "status",
-      text: "Status",
+      text: "DayChangeratio",
       sort: true,
       sortCaret: sortCaret,
-      formatter: columnFormatters.StatusColumnFormatter,
+      headerSortingClasses,
+    },
+    {
+      dataField: "status",
+      text: "FirstTragetPrice",
+      sort: true,
+      sortCaret: sortCaret,
+ 
+      headerSortingClasses,
+    },
+    {
+      dataField: "status",
+      text: "SecondTragetPrice",
+      sort: true,
+      sortCaret: sortCaret,
+     
+      headerSortingClasses,
+    },
+    {
+      dataField: "status",
+      text: "ThirdTragetPrice",
+      sort: true,
+      sortCaret: sortCaret,
+    
+      headerSortingClasses,
+    },
+    {
+      dataField: "status",
+      text: "Industry",
+      sort: true,
+      sortCaret: sortCaret,
+     
       headerSortingClasses,
     },
     {

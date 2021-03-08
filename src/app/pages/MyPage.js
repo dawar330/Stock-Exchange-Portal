@@ -3,7 +3,7 @@ import {useSubheader} from "../../_metronic/layout";
 
 export const MyPage = () => {
   const suhbeader = useSubheader();
-  suhbeader.setTitle("DashBoard");
+  suhbeader.setTitle("Investments");
 
-  return (<>My Page</>);
+  return (<>Mypage</>);
 };

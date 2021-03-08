@@ -28,16 +28,17 @@ export function CustomersUIProvider({customersUIEvents, children}) {
   }, []);
 
   const initCustomer = {
-    id: undefined,
-    firstName: "",
-    lastName: "",
-    email: "",
-    userName: "",
-    gender: "Female",
-    status: 0,
-    dateOfBbirth: "",
-    ipAddress: "",
-    type: 1
+    Symbol: undefined,
+    Company: "",
+    CurrentPrice: "",
+    PriceExtHrs: "",
+    DayChange$: "",
+    DayChangeratio: "Female",
+    FirstTragetPrice: "",
+    SecondTragetPrice: "",
+    ThirdTragetPrice: "",
+    Industry: "",
+    type: ""
   };
 
   const value = {
