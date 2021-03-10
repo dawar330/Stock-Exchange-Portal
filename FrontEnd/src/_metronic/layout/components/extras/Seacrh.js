@@ -1,15 +1,11 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
+import { TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
-
-
-
 export default function Seacrh() {
-
   const [inputValue, setInputValue] = React.useState("");
-  const [options, setoptions] = React.useState([])
-    const [value, setValue] = React.useState(options[0]);
+  const [options, setoptions] = React.useState([]);
+  const [value, setValue] = React.useState(options[0]);
   const twelvedata = require("twelvedata");
 
   // setup the config
@@ -29,35 +25,40 @@ export default function Seacrh() {
     .symbolSearch(params)
     .then((data) => {
       var symbols = [];
-     let res = data.data;
-     for (let index = 0; index < res.length; index++) {
-       const element = res[index];
-       symbols.push(element.symbol)
-       
-     }
-     
-       setoptions(symbols)
+      let res = data.data;
+      for (let index = 0; index < res.length; index++) {
+        const element = res[index];
+        symbols.push(element.symbol);
+      }
+
+      setoptions(symbols);
     })
     .catch((error) => {
       // handle error
     });
 
   return (
-    <Autocomplete
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
-      inputValue={inputValue}
-      onInputChange={(event, newInputValue) => {
-        setInputValue(newInputValue);
-      }}
-      id="symbol"
-      options={options}
-      style={{ width: 300 }}
-      renderInput={(params) => (
-        <TextField {...params} label="Symbol" variant="outlined" />
-      )}
-    />
+    <div>
+      <Autocomplete
+        id="symbol"
+        freeSolo
+        options={options}
+        onInputChange={(event, newInputValue) => {
+          setInputValue(newInputValue);
+        }}
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Symbol"
+            margin="normal"
+            variant="outlined"
+          />
+        )}
+      />
+    </div>
   );
 }

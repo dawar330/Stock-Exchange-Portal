@@ -9,7 +9,7 @@ import { CustomersFilter } from "./customers-filter/CustomersFilter";
 import { CustomersTable } from "./customers-table/CustomersTable";
 import { CustomersGrouping } from "./customers-grouping/CustomersGrouping";
 import { useCustomersUIContext } from "./CustomersUIContext";
-import Seacrh from "../../../../../_metronic/layout/components/extras/Seacrh"
+import Seacrh from "../../../../../_metronic/layout/components/extras/Seacrh";
 
 export function CustomersCard() {
   const customersUIContext = useCustomersUIContext();
@@ -24,14 +24,14 @@ export function CustomersCard() {
     <Card>
       <CardHeader title="Investments list">
         <CardHeaderToolbar>
-          
-          <Seacrh/>
+          <Seacrh />
+          <br />
           <button
             type="button"
             className="btn btn-primary"
             onClick={customersUIProps.newCustomerButtonClick}
           >
-           Add New Investment
+            Add New Investment
           </button>
         </CardHeaderToolbar>
       </CardHeader>
