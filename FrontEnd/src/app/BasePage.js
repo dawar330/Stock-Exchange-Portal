@@ -4,6 +4,7 @@ import { LayoutSplashScreen, ContentRoute } from "../_metronic/layout";
 import { ConfigPage } from "./pages/ConfigPage";
 import ECommercePage from "./modules/ECommerce/pages/eCommercePage"
 import { DashboardPage } from "./pages/DashboardPage";
+import { MyPage } from "./pages/MyPage";
 
 
 
@@ -21,8 +22,8 @@ export default function BasePage() {
           <Redirect exact from="/" to="/dashboard" />
         }
         <ContentRoute path="/dashboard" component={DashboardPage} />
-        <Route path="/e-commerce/products" component={ECommercePage} />
-        <Route path="/e-commerce/customers" component={ECommercePage} />
+        <Route path="/Investments" component={MyPage} />
+        <Route path="/Interests" component={ECommercePage} />
      
         <Route path="/Config" component={ConfigPage} />
         <Redirect to="error/error-v1" />

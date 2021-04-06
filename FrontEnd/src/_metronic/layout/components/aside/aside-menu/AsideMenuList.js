@@ -36,12 +36,12 @@ export function AsideMenuList({ layoutProps }) {
         {/* begin::1 Level link to page 1 (interested stock) */}
         <li
           className={`menu-item ${getMenuItemActive(
-            "/e-commerce/products",
+            "/Interests",
             false
           )}`}
           aria-haspopup="true"
         >
-          <NavLink className="menu-link" to="/e-commerce/products">
+          <NavLink className="menu-link" to="/Interests">
             <span className="svg-icon menu-icon">
               <SVG src={toAbsoluteUrl("/media/svg/icons/General/Star.svg")} />
             </span>
@@ -53,12 +53,12 @@ export function AsideMenuList({ layoutProps }) {
         {/* begin::1 Level link to page 1 (Invested stock) */}
         <li
           className={`menu-item ${getMenuItemActive(
-            "e-commerce/customers",
+            "Investments",
             false
           )}`}
           aria-haspopup="true"
         >
-          <NavLink className="menu-link" to="/e-commerce/customers">
+          <NavLink className="menu-link" to="/Investments">
             <span className="svg-icon menu-icon">
               <SVG src={toAbsoluteUrl("/media/svg/icons/Shopping/Money.svg")} />
             </span>

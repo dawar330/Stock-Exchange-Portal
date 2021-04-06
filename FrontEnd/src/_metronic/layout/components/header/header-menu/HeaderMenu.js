@@ -27,12 +27,12 @@ export function HeaderMenu({ layoutProps }) {
             {/*end::1 Level*/}
             
             {/*begin::1 Level*/}
-            <li className={`menu-item menu-item-rel ${getMenuItemActive('/e-commerce/products')}`}>
+            <li className={`menu-item menu-item-rel ${getMenuItemActive('/Interests')}`}>
                 <NavLink className="menu-link"
                                 
                 
                 
-                to="/e-commerce/products">
+                to="/Interests">
                     <span className="menu-text">Interests</span>
                     {layoutProps.rootArrowEnabled && (<i className="menu-arrow" />)}
                 </NavLink>
@@ -40,8 +40,8 @@ export function HeaderMenu({ layoutProps }) {
             {/*end::1 Level*/}
 
             {/*begin::1 Level*/}
-            <li className={`menu-item menu-item-rel ${getMenuItemActive('/e-commerce/customers')}`}>
-                <NavLink className="menu-link" to="/e-commerce/customers">
+            <li className={`menu-item menu-item-rel ${getMenuItemActive('/Investments')}`}>
+                <NavLink className="menu-link" to="/Investments">
                     <span className="menu-text">Investments</span>
                     {layoutProps.rootArrowEnabled && (<i className="menu-arrow" />)}
                 </NavLink>

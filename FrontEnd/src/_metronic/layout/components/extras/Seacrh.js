@@ -2,10 +2,10 @@ import React from "react";
 import { TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
-export default function Seacrh() {
+export default function Seacrh(props) {
   const [inputValue, setInputValue] = React.useState("");
   const [options, setoptions] = React.useState([]);
-  const [value, setValue] = React.useState(options[0]);
+  const { value, setValue } = props;
   const twelvedata = require("twelvedata");
 
   // setup the config

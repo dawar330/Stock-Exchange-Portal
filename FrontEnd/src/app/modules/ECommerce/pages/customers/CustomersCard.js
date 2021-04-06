@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import {
   Card,
   CardBody,
@@ -19,12 +19,13 @@ export function CustomersCard() {
       newCustomerButtonClick: customersUIContext.newCustomerButtonClick,
     };
   }, [customersUIContext]);
+  const [value, setvalue] = useState()
 
   return (
     <Card>
       <CardHeader title="Investments list">
         <CardHeaderToolbar>
-          <Seacrh />
+          <Seacrh value={value} setValue={setvalue} />
           <br />
           <button
             type="button"
