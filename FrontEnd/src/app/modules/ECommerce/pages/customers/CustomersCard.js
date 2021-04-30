@@ -19,13 +19,13 @@ export function CustomersCard() {
       newCustomerButtonClick: customersUIContext.newCustomerButtonClick,
     };
   }, [customersUIContext]);
-  const [value, setvalue] = useState()
+  const [value, setvalue] = useState();
 
   return (
     <Card>
       <CardHeader title="Investments list">
         <CardHeaderToolbar>
-          <Seacrh value={value} setValue={setvalue} />
+          <Seacrh value={value} setvalue={setvalue} />
           <br />
           <button
             type="button"

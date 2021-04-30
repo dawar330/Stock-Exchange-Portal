@@ -22,9 +22,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import {
   MetronicLayoutProvider,
   MetronicSplashScreenProvider,
-  MetronicSubheaderProvider
+  MetronicSubheaderProvider,
 } from "./_metronic/layout";
-import {MetronicI18nProvider} from "./_metronic/i18n";
+import { MetronicI18nProvider } from "./_metronic/i18n";
 
 /**
  * Base URL of the website.
@@ -39,14 +39,13 @@ const { PUBLIC_URL } = process.env;
  *
  * @see https://github.com/ctimmerm/axios-mock-adapter
  */
-/* const mock = */ _redux.mockAxios(axios);
+/* const mock = */
 
 /**
  * Inject metronic interceptors for axios.
  *
  * @see https://github.com/axios/axios#interceptors
  */
-_redux.setupAxios(axios, store);
 
 ReactDOM.render(
   <MetronicI18nProvider>

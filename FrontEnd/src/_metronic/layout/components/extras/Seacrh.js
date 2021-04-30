@@ -5,38 +5,30 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 export default function Seacrh(props) {
   const [inputValue, setInputValue] = React.useState("");
   const [options, setoptions] = React.useState([]);
-  const { value, setValue } = props;
-  const twelvedata = require("twelvedata");
+  const { setSelectedSymbol } = props;
 
-  // setup the config
-
-  const config = {
-    key: "97e11ed1d2614602a000b09743e06a0d",
-  };
-
-  // initialize and use the client
-
-  const client = twelvedata(config);
   let params = {
-    symbol: inputValue,
+    symbol: inputValue || "",
     outputsize: 5,
   };
-  client
-    .symbolSearch(params)
-    .then((data) => {
-      var symbols = [];
-      let res = data.data;
-      for (let index = 0; index < res.length; index++) {
-        const element = res[index];
-        symbols.push(element.symbol);
-      }
 
-      setoptions(symbols);
-    })
-    .catch((error) => {
-      // handle error
-    });
+  React.useEffect(() => {
+    props.client
+      .symbolSearch(params)
+      .then((data) => {
+        var symbols = [];
+        let res = data.data;
+        for (let index = 0; index < res.length; index++) {
+          const element = res[index];
+          symbols.push(element.symbol);
+        }
 
+        setoptions(symbols);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [inputValue]);
   return (
     <div>
       <Autocomplete
@@ -46,9 +38,9 @@ export default function Seacrh(props) {
         onInputChange={(event, newInputValue) => {
           setInputValue(newInputValue);
         }}
-        value={value}
+        value={props.SelectedSymbol}
         onChange={(event, newValue) => {
-          setValue(newValue);
+          props.setSelectedSymbol(newValue);
         }}
         renderInput={(params) => (
           <TextField
