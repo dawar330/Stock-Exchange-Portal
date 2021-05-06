@@ -1,48 +1,13 @@
-import React, { useState, useEffect } from "react";
-import firebase, { db } from "../../firebase/config";
+import React, { useState } from "react";
 import { useSubheader } from "../../_metronic/layout";
 import EnhancedTable from "../../_metronic/layout/components/extras/EnhancedTable";
 
 export const ProspectStockesPage = (props) => {
   const suhbeader = useSubheader();
   suhbeader.setTitle("Prospect Stocks");
-  const twelvedata = require("twelvedata");
   const [SelectedSymbol, setSelectedSymbol] = useState("");
   const { user } = props;
-  const [rows, setrows] = useState([
-    {
-      Symbol: "",
-      Price: "",
-      daychange: "",
-      daypercentChange: "",
-      Industry: "",
-      Timestamp: "",
-    },
-  ]);
 
-  // React.useEffect(() => {
-  //   let investmentatble = [];
-  //   let data;
-  //   {
-  //     user.ProspectStocks &&
-  //       user.ProspectStocks.forEach((element) => {
-  //         Get(element).then(function(result) {
-  //           data = result;
-  //           investmentatble.push({ Symbol: element, ...data });
-  //         });
-  //         setrows(investmentatble);
-  //       });
-  //   }
-  // }, [user.ProspectStocks]);
-  // setup the config
-
-  const config = {
-    key: "97e11ed1d2614602a000b09743e06a0d",
-  };
-
-  // initialize and use the client
-
-  const client = twelvedata(config);
   // async function Get(paramSymbol) {
   //   let investment1 = {
   //     Price: "",
@@ -173,7 +138,6 @@ export const ProspectStockesPage = (props) => {
       <EnhancedTable
         SelectedSymbol={SelectedSymbol}
         setSelectedSymbol={setSelectedSymbol}
-        client={client}
         ProspectStocks={user.ProspectStocks}
       />
     </>

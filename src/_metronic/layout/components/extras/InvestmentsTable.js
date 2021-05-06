@@ -57,6 +57,24 @@ const headCells = [
     label: "Ticker Symbol",
   },
   {
+    id: "TotalStocks",
+    numeric: true,
+    disablePadding: false,
+    label: "Total Stocks Held",
+  },
+  {
+    id: "Protfolio",
+    numeric: true,
+    disablePadding: false,
+    label: "% of Protfolio",
+  },
+  {
+    id: "CostBasis",
+    numeric: true,
+    disablePadding: false,
+    label: "Cost Basis",
+  },
+  {
     id: "Price",
     numeric: true,
     disablePadding: false,
@@ -81,6 +99,7 @@ const headCells = [
     disablePadding: false,
     label: " Day Change %",
   },
+
   {
     id: "lastupdated",
     numeric: true,
@@ -210,7 +229,7 @@ const InvestmentsTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          Prospect Stocks
+          Invested Stocks
         </Typography>
       )}
       <div style={{ width: "150px", margin: "auto" }}>
@@ -225,7 +244,7 @@ const InvestmentsTableToolbar = (props) => {
             db.collection("Users")
               .doc("2342341342")
               .update({
-                ProspectStocks: firebase.firestore.FieldValue.arrayUnion(
+                InvestedStocks: firebase.firestore.FieldValue.arrayUnion(
                   `${props.SelectedSymbol}`
                 ),
               });
@@ -280,14 +299,17 @@ export default function InvestmentsTable(props) {
   const [dense, setDense] = React.useState(true);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const [rows, setrows] = useState([{}]);
-  console.log(rows);
+  const [rows, setrows] = useState([]);
+  console.log(props.InvestedStocks);
   React.useEffect(() => {
     let investmentatble = [];
 
     {
-      props.ProspectStocks &&
-        props.ProspectStocks.forEach((element) => {
+      let x = document.querySelector(".MuiTablePagination-spacer");
+      x.innerHTML = `&nbsp<b>Total Cash Quantity:</b> ${props.TotalQuantity}&nbsp&nbsp <b> Total Profolio:</b> ${props.TotalProfolio} %`;
+      x.setAttribute("Padding", "0 30px");
+      props.InvestedStocks &&
+        props.InvestedStocks.forEach((element) => {
           Get(element).then(function(result) {
             if (result) {
               console.log(result);
@@ -298,11 +320,16 @@ export default function InvestmentsTable(props) {
         });
     }
     setrows(investmentatble);
-  }, [props.ProspectStocks]);
+  }, [props.InvestedStocks]);
 
+  const { REACT_APP_FINANTIAL_MODELING_KEY } = process.env;
+  console.log(REACT_APP_FINANTIAL_MODELING_KEY);
   async function Get(paramSymbol) {
     const investment1 = {
       Symbol: paramSymbol,
+      Protfolio: "",
+      CostBasis: "",
+      Quantity: "",
       Price: "",
       daychange: "",
       daypercentChange: "",
@@ -310,13 +337,29 @@ export default function InvestmentsTable(props) {
       Timestamp: "",
     };
 
+    const ReportRef = db
+      .collection("Users")
+      .doc("2342341342")
+      .collection("Reports")
+      .doc(paramSymbol);
+    const doc = await ReportRef.get();
+    if (!doc.exists) {
+      console.log("No such document!");
+    } else {
+      investment1.Protfolio = doc.data().Protfolio;
+      investment1.Quantity = doc.data().Quantity;
+
+      investment1.CostBasis = doc.data().CostBasis;
+
+      console.log("Document data:", doc.data());
+    }
     const reqIndustry = await axios.get(
-      `https://financialmodelingprep.com/api/v3/profile/${paramSymbol}?apikey=4479917021315275055cff582c3a893a`
+      `https://financialmodelingprep.com/api/v3/profile/${paramSymbol}?apikey=${REACT_APP_FINANTIAL_MODELING_KEY}`
     );
     investment1.Industry = await reqIndustry.data[0].industry;
 
     const qoute = await axios.get(
-      `https://financialmodelingprep.com/api/v3/quote/${paramSymbol}?apikey=4479917021315275055cff582c3a893a`
+      `https://financialmodelingprep.com/api/v3/quote/${paramSymbol}?apikey=${REACT_APP_FINANTIAL_MODELING_KEY}`
     );
 
     investment1.daychange = await qoute.data[0].change;
@@ -453,7 +496,7 @@ export default function InvestmentsTable(props) {
                             db.collection("Users")
                               .doc("2342341342")
                               .update({
-                                ProspectStocks: firebase.firestore.FieldValue.arrayRemove(
+                                InvestedStocks: firebase.firestore.FieldValue.arrayRemove(
                                   `${row.Symbol}`
                                 ),
                               });
@@ -472,12 +515,17 @@ export default function InvestmentsTable(props) {
                       >
                         {row.Symbol}
                       </TableCell>
+                      <TableCell align="right">{row.Quantity}</TableCell>
+                      <TableCell align="right">{row.Protfolio}</TableCell>
+                      <TableCell align="right">{row.CostBasis}</TableCell>
+
                       <TableCell align="right">{row.Price}</TableCell>
                       <TableCell align="right">{}</TableCell>
                       <TableCell align="right">{row.daychange}</TableCell>
                       <TableCell align="right">
                         {row.daypercentChange}
                       </TableCell>
+
                       <TableCell align="right">{row.Timestamp}</TableCell>
                       <TableCell align="right">{}</TableCell>
                       <TableCell align="right">{}</TableCell>
@@ -495,6 +543,7 @@ export default function InvestmentsTable(props) {
             </TableBody>
           </Table>
         </TableContainer>
+
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"

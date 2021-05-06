@@ -1,25 +1,13 @@
-import React, { useState, useEffect } from "react";
-import firebase, { db } from "../../firebase/config";
+import React, { useState } from "react";
 import { useSubheader } from "../../_metronic/layout";
-import EnhancedTable from "../../_metronic/layout/components/extras/EnhancedTable";
 import InvestmentsTable from "../../_metronic/layout/components/extras/InvestmentsTable";
 
 export const InvestmentPage = (props) => {
   const suhbeader = useSubheader();
   suhbeader.setTitle("Investments");
-  const twelvedata = require("twelvedata");
+
   const [SelectedSymbol, setSelectedSymbol] = useState("");
   const { user } = props;
-  const [rows, setrows] = useState([
-    {
-      Symbol: "",
-      Price: "",
-      daychange: "",
-      daypercentChange: "",
-      Industry: "",
-      Timestamp: "",
-    },
-  ]);
 
   // React.useEffect(() => {
   //   let investmentatble = [];
@@ -37,13 +25,13 @@ export const InvestmentPage = (props) => {
   // }, [user.ProspectStocks]);
   // setup the config
 
-  const config = {
-    key: "97e11ed1d2614602a000b09743e06a0d",
-  };
+  // const config = {
+  //   key: "97e11ed1d2614602a000b09743e06a0d",
+  // };
 
-  // initialize and use the client
+  // // initialize and use the client
 
-  const client = twelvedata(config);
+  // const client = twelvedata(config);
   // async function Get(paramSymbol) {
   //   let investment1 = {
   //     Price: "",
@@ -61,7 +49,7 @@ export const InvestmentPage = (props) => {
   //     });
   //   let data;
   //   await fetch(
-  //     `https://financialmodelingprep.com/api/v3/profile/${paramSymbol}?apikey=060d486a08e036b0493de87c0f143d72`
+  //     `https://financialmodelingprep.com/api/v3/profile/${paramSymbol}?apikey=process.env.REACT_APP_FINANTIAL_MODELING_KEY`
   //   ).then((response) => {
   //     data = response.json();
   //     data.then(function(result) {
@@ -71,7 +59,7 @@ export const InvestmentPage = (props) => {
   //   });
 
   //   await fetch(
-  //     `https://financialmodelingprep.com/api/v3/quote/${paramSymbol}?apikey=060d486a08e036b0493de87c0f143d72`
+  //     `https://financialmodelingprep.com/api/v3/quote/${paramSymbol}?apikey=process.env.REACT_APP_FINANTIAL_MODELING_KEY`
   //   ).then((response) => {
   //     data = response.json();
   //     data.then(function(result) {
@@ -168,14 +156,16 @@ export const InvestmentPage = (props) => {
   //       console.log(error);
   //     });
   // }
-
+  console.log(user);
   return (
     <>
       <InvestmentsTable
         SelectedSymbol={SelectedSymbol}
         setSelectedSymbol={setSelectedSymbol}
-        client={client}
-        ProspectStocks={user.ProspectStocks}
+        // client={client}
+        InvestedStocks={user.InvestedStocks}
+        TotalProfolio={user.TotalProfolio}
+        TotalQuantity={user.TotalQuantity}
       />
     </>
   );

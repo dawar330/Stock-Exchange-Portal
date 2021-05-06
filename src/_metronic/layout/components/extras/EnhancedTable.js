@@ -13,13 +13,11 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import DeleteIcon from "@material-ui/icons/Delete";
-import FilterListIcon from "@material-ui/icons/FilterList";
 import Seacrh from "./Seacrh";
 import firebase, { db } from "../../../../firebase/config";
 const axios = require("axios").default;
@@ -311,12 +309,12 @@ export default function EnhancedTable(props) {
     };
 
     const reqIndustry = await axios.get(
-      `https://financialmodelingprep.com/api/v3/profile/${paramSymbol}?apikey=4479917021315275055cff582c3a893a`
+      `https://financialmodelingprep.com/api/v3/profile/${paramSymbol}?apikey=${process.env.REACT_APP_FINANTIAL_MODELING_KEY}`
     );
     investment1.Industry = await reqIndustry.data[0].industry;
 
     const qoute = await axios.get(
-      `https://financialmodelingprep.com/api/v3/quote/${paramSymbol}?apikey=4479917021315275055cff582c3a893a`
+      `https://financialmodelingprep.com/api/v3/quote/${paramSymbol}?apikey=${process.env.REACT_APP_FINANTIAL_MODELING_KEY}`
     );
 
     investment1.daychange = await qoute.data[0].change;
@@ -336,20 +334,6 @@ export default function EnhancedTable(props) {
 
     return investment1;
   }
-  // function createData() {
-  //   let investmentatble = [];
-  //   {
-  //     ProspectStocks &&
-  //       ProspectStocks.forEach((element) => {
-  //         Get(element).then(
-  //           investmentatble.push({ Symbol: element, ...Investment })
-  //         );
-  //       });
-  //     setrows(investmentatble);
-  //     console.log(investmentatble);
-  //   }
-  // }
-  // setInterval(createData, 30000);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -364,26 +348,6 @@ export default function EnhancedTable(props) {
       return;
     }
     setSelected([]);
-  };
-
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
   };
 
   const handleChangePage = (event, newPage) => {
