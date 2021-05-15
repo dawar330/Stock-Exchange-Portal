@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import SVG from "react-inlinesvg";
+import { toAbsoluteUrl } from "../../_metronic/_helpers";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
@@ -298,7 +300,18 @@ function ReqDialog(props) {
   );
 }
 function SLTakeProfit(props) {
-  const { onClose, value: valueProp, open, ...other } = props;
+  const {
+    onClose,
+    value: valueProp,
+    open,
+    BloodyMarket,
+    VolitileMarket,
+    SuperGreenRecoryMarket,
+    setBloodyMarket,
+    setVolitileMarket,
+    setSuperGreenRecoryMarket,
+    ...other
+  } = props;
   const [value, setValue] = React.useState(valueProp);
   const radioGroupRef = React.useRef(null);
 
@@ -340,42 +353,51 @@ function SLTakeProfit(props) {
         SL / Take Profit %
       </DialogTitle>
       <DialogContent dividers>
-        <ListItemText primary="Bloody Red Market" />
+        <ListItemText primary="Bloody Red Market" secondary={BloodyMarket} />
         <div style={{ width: "250px" }}>
           {" "}
           <Slider
             defaultValue={30}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="auto"
-            onChange={(e, val) => {}}
+            onChange={(e, val) => {
+              setBloodyMarket(val);
+            }}
             step={1}
             marks
             min={0}
             max={15}
           />
         </div>{" "}
-        <ListItemText primary="Volitile Market" />
+        <ListItemText primary="Volitile Market" secondary={VolitileMarket} />
         <div style={{ width: "250px" }}>
           {" "}
           <Slider
             defaultValue={30}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="auto"
-            onChange={(e, val) => {}}
+            onChange={(e, val) => {
+              setVolitileMarket(val);
+            }}
             step={1}
             marks
             min={0}
             max={15}
           />
         </div>{" "}
-        <ListItemText primary="Super Green Recovery Market" />
+        <ListItemText
+          primary="Super Green Recovery Market"
+          secondary={SuperGreenRecoryMarket}
+        />
         <div style={{ width: "250px" }}>
           {" "}
           <Slider
             defaultValue={30}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="auto"
-            onChange={(e, val) => {}}
+            onChange={(e, val) => {
+              setSuperGreenRecoryMarket(val);
+            }}
             step={1}
             marks
             min={0}
@@ -419,24 +441,25 @@ function TradingPlanPage() {
   const [openReq, setOpenReq] = React.useState(false);
   const [openSL, setOpenSL] = React.useState(false);
   const [value, setValue] = React.useState("None");
-  const [Play, setPlay] = useState();
-  const [BankrollPercent, setBankrollPercent] = useState();
+  const [Play, setPlay] = useState(0);
+  const [BankrollPercent, setBankrollPercent] = useState(0);
+  const [protfoloPercent, setprotfoloPercent] = useState(30);
   const [Bankroll$, setBankroll$] = useState();
   const [BuyinMethod, setBuyinMethod] = useState("");
   const [SectorPlan, setSectorPlan] = useState();
-  const [Austin, setAustin] = useState();
-  const [lee, setlee] = useState();
+  const [Austin, setAustin] = useState(0);
+  const [lee, setlee] = useState(0);
   const [Buyinpercentlong, setBuyinpercentlong] = useState();
   const [Buyinpercentshort, setBuyinpercentshort] = useState();
   const [typeplayoption, settypeplayoption] = useState();
   const [typeplayRetirement, settypeplayRetirement] = useState();
   const [typeplaySwings, settypeplaySwings] = useState();
-
-  const [risk, setrisk] = useState();
-  const [reward, setreward] = useState();
-  const [BloodyMarket, setBloodyMarket] = useState();
-  const [VolitileMarket, setVolitileMarket] = useState();
-  const [SuperGreenRecoryMarket, setSuperGreenRecoryMarket] = useState();
+  const [inputList, setInputList] = useState([{ plan: "", reason: "" }]);
+  const [risk, setrisk] = useState(0);
+  const [reward, setreward] = useState(0);
+  const [BloodyMarket, setBloodyMarket] = useState(0);
+  const [VolitileMarket, setVolitileMarket] = useState(0);
+  const [SuperGreenRecoryMarket, setSuperGreenRecoryMarket] = useState(0);
   const [Rule, setRule] = useState("");
   const [plan, setplan] = React.useState(0);
   function valuetext(value) {
@@ -498,7 +521,7 @@ function TradingPlanPage() {
                 // onClick={handleClickListItem}
                 role="listitem"
               >
-                <ListItemText primary="Amount of Plays " />
+                <ListItemText primary="Total # Of Stocks" secondary={Play} />
 
                 <div style={{ width: "250px" }}>
                   {" "}
@@ -525,7 +548,40 @@ function TradingPlanPage() {
                 // onClick={handleClickListItem}
                 role="listitem"
               >
-                <ListItemText primary="Bankroll % per Play" />
+                <ListItemText
+                  primary="Porfolio % Max invested in Stocks"
+                  secondary={protfoloPercent}
+                />
+
+                <div style={{ width: "250px" }}>
+                  {" "}
+                  <Slider
+                    defaultValue={30}
+                    aria-labelledby="discrete-slider"
+                    valueLabelDisplay="auto"
+                    onChange={(e, val) => setprotfoloPercent(val)}
+                    step={10}
+                    marks
+                    min={30}
+                    max={100}
+                  />
+                </div>
+              </ListItem>
+            </Grid>{" "}
+            <Grid item xs={12} sm={6}>
+              <ListItem
+                // button
+                divider
+                aria-haspopup="true"
+                aria-controls="Plan"
+                aria-label="Plan"
+                // onClick={handleClickListItem}
+                role="listitem"
+              >
+                <ListItemText
+                  primary="Bankroll % per Stock"
+                  secondary={BankrollPercent}
+                />
 
                 <div style={{ width: "250px" }}>
                   {" "}
@@ -552,20 +608,10 @@ function TradingPlanPage() {
                 // onClick={handleClickListItem}
                 role="listitem"
               >
-                <ListItemText primary="Bankroll $ per Play" />
-
-                <div style={{ width: "250px" }}>
+                <ListItemText primary="Bankroll $ per Stock" />{" "}
+                <div style={{ paddingLeft: "60px", width: "250px" }}>
                   {" "}
-                  <TextField
-                    id="outlined-basic"
-                    label="Bankroll $ per Play"
-                    variant="outlined"
-                    value={Bankroll$}
-                    onChange={(e) => {
-                      setBankroll$(e.target.value);
-                    }}
-                    type="number"
-                  />
+                  $ 50{" "}
                 </div>
               </ListItem>
             </Grid>{" "}
@@ -579,7 +625,39 @@ function TradingPlanPage() {
                 onClick={handleClickListItem}
                 role="listitem"
               >
-                <ListItemText primary="Buy In Method" secondary={value} />
+                <ListItemText primary="Buy In Method %" secondary={value} />
+              </ListItem>
+            </Grid>{" "}
+            <Grid item xs={12} sm={6}>
+              <ListItem
+                button
+                divider
+                aria-haspopup="true"
+                aria-controls="ringtone-menu"
+                aria-label="Phone ringtone"
+                onClick={handleClickListItem}
+                role="listitem"
+              >
+                <ListItemText
+                  primary="Buy In Percentage 'Swing Trade'"
+                  secondary={value}
+                />
+              </ListItem>{" "}
+            </Grid>{" "}
+            <Grid item xs={12} sm={6}>
+              <ListItem
+                button
+                divider
+                aria-haspopup="true"
+                aria-controls="ringtone-menu"
+                aria-label="Phone ringtone"
+                onClick={handleClickListItem}
+                role="listitem"
+              >
+                <ListItemText
+                  primary="Buy In Percentage 'Long Trade'"
+                  secondary={value}
+                />
               </ListItem>
             </Grid>{" "}
             <Grid item xs={12} sm={6}>
@@ -619,7 +697,10 @@ function TradingPlanPage() {
                 // onClick={handleClickListItem}
                 role="listitem"
               >
-                <ListItemText primary="Austin / Lee Ratio" />
+                <ListItemText
+                  primary="Austin / Lee Ratio"
+                  secondary={Austin + " / " + lee}
+                />
 
                 <div style={{ width: "250px" }}>
                   {" "}
@@ -633,7 +714,6 @@ function TradingPlanPage() {
                     }}
                     type="number"
                     style={{ width: "100px" }}
-                    error={false}
                   />
                   <TextField
                     id="outlined-basic"
@@ -659,38 +739,6 @@ function TradingPlanPage() {
               onClose={handleClose}
               value={value}
             />{" "}
-            <Grid item xs={12} sm={6}>
-              <ListItem
-                button
-                divider
-                aria-haspopup="true"
-                aria-controls="ringtone-menu"
-                aria-label="Phone ringtone"
-                onClick={handleClickListItem}
-                role="listitem"
-              >
-                <ListItemText
-                  primary="Buy In Percentage Long"
-                  secondary={value}
-                />
-              </ListItem>{" "}
-            </Grid>{" "}
-            <Grid item xs={12} sm={6}>
-              <ListItem
-                button
-                divider
-                aria-haspopup="true"
-                aria-controls="ringtone-menu"
-                aria-label="Phone ringtone"
-                onClick={handleClickListItem}
-                role="listitem"
-              >
-                <ListItemText
-                  primary="Buy In Percentage Short"
-                  secondary={value}
-                />
-              </ListItem>
-            </Grid>{" "}
             <Grid item xs={12} sm={6}>
               <ListItem
                 // button
@@ -753,7 +801,10 @@ function TradingPlanPage() {
                 // onClick={handleClickListItem}
                 role="listitem"
               >
-                <ListItemText primary="Risk / Reward" />
+                <ListItemText
+                  primary="Risk / Reward"
+                  secondary={risk + " / " + reward}
+                />
 
                 <div style={{ width: "250px" }}>
                   {" "}
@@ -788,30 +839,112 @@ function TradingPlanPage() {
                 <ListItemText primary="SL/Take Profit %" />
               </ListItem>{" "}
             </Grid>{" "}
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <ListItem
-                button
                 divider
                 aria-haspopup="true"
                 aria-controls="ringtone-menu"
                 aria-label="Phone ringtone"
-                onClick={handleClickPsy}
                 role="listitem"
               >
-                <ListItemText primary="Trading Psychology Plan " />
+                <ListItemText
+                  primary="Trading Psychology Plan "
+                  style={{ fontSize: "40px", textAlign: "center" }}
+                />
+              </ListItem>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <ListItem
+                divider
+                aria-haspopup="true"
+                aria-controls="ringtone-menu"
+                aria-label="Phone ringtone"
+                role="listitem"
+                id="tradingplan"
+              >
+                <DialogContent id="trade">
+                  <ListItemText primary="Trading Psychology Plan" />
+                  {inputList.map((x, i) => {
+                    return (
+                      <div>
+                        <ListItemText primary="Plan" />
+                        <TextField
+                          id="filled-multiline-flexible"
+                          label="Plan"
+                          multiline
+                          rowsMax="4"
+                          margin="normal"
+                          variant="filled"
+                        />
+                        <ListItemText primary="Reason" />{" "}
+                        <TextField
+                          id="filled-multiline-flexible"
+                          label="Reason"
+                          multiline
+                          rowsMax="4"
+                          margin="normal"
+                          variant="filled"
+                        />
+                      </div>
+                    );
+                  })}
+                  <span className="svg-icon menu-icon">
+                    <SVG
+                      src={toAbsoluteUrl("media/svg/icons/General/add.svg")}
+                      onClick={() => {
+                        setInputList([...inputList, { plan: "", reason: "" }]);
+                      }}
+                    />
+                  </span>
+                </DialogContent>
               </ListItem>{" "}
             </Grid>{" "}
             <Grid item xs={12} sm={6}>
               <ListItem
-                button
                 divider
                 aria-haspopup="true"
                 aria-controls="ringtone-menu"
                 aria-label="Phone ringtone"
-                onClick={handleClickReq}
                 role="listitem"
               >
-                <ListItemText primary="Requirements To Enter A Play" />
+                <DialogContent>
+                  <ListItemText primary="Requirements To Enter A Play" />
+                  <ListItemText primary="Short Swings" />
+                  <div style={{ width: "400px" }}>
+                    <TextField
+                      id="filled-multiline-flexible"
+                      label="Short"
+                      multiline
+                      rowsMax="4"
+                      margin="normal"
+                      variant="filled"
+                    />
+                  </div>{" "}
+                  <ListItemText primary="Long Swings" />
+                  <div style={{ width: "400px" }}>
+                    {" "}
+                    <TextField
+                      id="filled-multiline-flexible"
+                      label="Long"
+                      multiline
+                      rowsMax="4"
+                      margin="normal"
+                      variant="filled"
+                    />
+                  </div>{" "}
+                  <ListItemText primary="Options" />
+                  <div style={{ width: "400px" }}>
+                    {" "}
+                    <TextField
+                      id="filled-multiline-flexible"
+                      label="Options"
+                      multiline
+                      rowsMax="4"
+                      margin="normal"
+                      variant="filled"
+                    />
+                  </div>
+                </DialogContent>
               </ListItem>{" "}
             </Grid>{" "}
             <Grid item xs={12} sm={6}>
@@ -824,25 +957,19 @@ function TradingPlanPage() {
                 // onClick={handleClickListItem}
                 role="listitem"
               >
-                <ListItemText primary="Rules" />
-
-                <div>
-                  {" "}
-                  <TextField
-                    id="filled-multiline-flexible"
-                    label="Rules"
-                    multiline
-                    rowsMax="4"
-                    variant="outlined"
-                    type="text"
-                    style={{ width: "300px" }}
-                    error={false}
-                    onChange={(e) => {
-                      setRule(e.target.value);
-                    }}
-                    value={Rule}
-                  />
-                </div>
+                <DialogContent>
+                  <ListItemText primary="Rules" />
+                  <div style={{ width: "400px" }}>
+                    <TextField
+                      id="filled-multiline-flexible"
+                      label="Rules"
+                      multiline
+                      rowsMax="4"
+                      margin="normal"
+                      variant="filled"
+                    />
+                  </div>{" "}
+                </DialogContent>
               </ListItem>
             </Grid>{" "}
           </Grid>
@@ -855,6 +982,12 @@ function TradingPlanPage() {
             open={openSL}
             onClose={handleCloseSL}
             value={value}
+            BloodyMarket={BloodyMarket}
+            VolitileMarket={VolitileMarket}
+            SuperGreenRecoryMarket={SuperGreenRecoryMarket}
+            setSuperGreenRecoryMarket={setSuperGreenRecoryMarket}
+            setBloodyMarket={setBloodyMarket}
+            setVolitileMarket={setVolitileMarket}
           />{" "}
           <PsyDialog
             classes={{

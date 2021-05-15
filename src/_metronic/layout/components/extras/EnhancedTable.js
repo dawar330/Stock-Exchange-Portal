@@ -49,6 +49,12 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
+    id: "AlertedBY",
+    numeric: false,
+    disablePadding: true,
+    label: "Alerted By",
+  },
+  {
     id: "Symbol",
     numeric: false,
     disablePadding: true,
@@ -80,10 +86,28 @@ const headCells = [
     label: " Day Change %",
   },
   {
+    id: "Type",
+    numeric: false,
+    disablePadding: true,
+    label: "Type Of Play",
+  },
+  {
+    id: "firstAlert",
+    numeric: false,
+    disablePadding: true,
+    label: "1st Alert Dates",
+  },
+  {
     id: "lastupdated",
     numeric: true,
     disablePadding: false,
-    label: "Date Last Updated",
+    label: "Stock Price Updated",
+  },
+  {
+    id: "AlertEntry",
+    numeric: false,
+    disablePadding: true,
+    label: "Alert Entry",
   },
   {
     id: "targetprice1",
@@ -103,7 +127,7 @@ const headCells = [
     disablePadding: false,
     label: " 3nd Target Price",
   },
-  { id: "note", numeric: false, disablePadding: false, label: "Notes" },
+  { id: "note", numeric: false, disablePadding: false, label: "Alert Note" },
   { id: "Industry", numeric: false, disablePadding: false, label: "Industry" },
 ];
 
@@ -428,6 +452,7 @@ export default function EnhancedTable(props) {
                           </IconButton>
                         </Tooltip>
                       </TableCell>
+                      <TableCell align="right">{}</TableCell>
                       <TableCell
                         component="th"
                         id={labelId}
@@ -442,7 +467,10 @@ export default function EnhancedTable(props) {
                       <TableCell align="right">
                         {row.daypercentChange}
                       </TableCell>
+                      <TableCell align="right">{}</TableCell>
+                      <TableCell align="right">{}</TableCell>
                       <TableCell align="right">{row.Timestamp}</TableCell>
+                      <TableCell align="right">{}</TableCell>
                       <TableCell align="right">{}</TableCell>
                       <TableCell align="right">{}</TableCell>
                       <TableCell align="right">{}</TableCell>

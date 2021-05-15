@@ -104,7 +104,7 @@ const headCells = [
     id: "lastupdated",
     numeric: true,
     disablePadding: false,
-    label: "Date Last Updated",
+    label: "Stock Price Updated",
   },
   {
     id: "targetprice1",
@@ -124,7 +124,12 @@ const headCells = [
     disablePadding: false,
     label: " 3nd Target Price",
   },
-  { id: "note", numeric: false, disablePadding: false, label: "Notes" },
+  {
+    id: "Alert Note",
+    numeric: false,
+    disablePadding: false,
+    label: "Alert Note",
+  },
   { id: "Industry", numeric: false, disablePadding: false, label: "Industry" },
 ];
 
@@ -306,7 +311,7 @@ export default function InvestmentsTable(props) {
 
     {
       let x = document.querySelector(".MuiTablePagination-spacer");
-      x.innerHTML = `&nbsp<b>Total Cash Quantity:</b> ${props.TotalQuantity}&nbsp&nbsp <b> Total Profolio:</b> ${props.TotalProfolio} %`;
+      x.innerHTML = `&nbsp<b>Total Cash $:</b> ${props.TotalQuantity}&nbsp&nbsp <b> Total Cash %:</b> ${props.TotalProfolio} %`;
       x.setAttribute("Padding", "0 30px");
       props.InvestedStocks &&
         props.InvestedStocks.forEach((element) => {
